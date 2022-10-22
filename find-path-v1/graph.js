@@ -37,6 +37,7 @@ function CreateButtonInit() {
                     const td = document.createElement('td')
                     td.classList.add('square')
                     td.classList.add('white')
+                    td.classList.add('pointer')
                     td.id = `td_${x}-${y}`
                     td.innerHTML = 0
                     tr.appendChild(td)
@@ -44,11 +45,13 @@ function CreateButtonInit() {
                     if (x === 1 && y === 1) {
                         td.classList.remove('white')
                         td.classList.add('blue')
+                        td.classList.remove('pointer')
                         return
                     }
                     if (x === width && y === height) {
                         td.classList.remove('white')
                         td.classList.add('red')
+                        td.classList.remove('pointer')
                         return
                     }
                     td.addEventListener('click', (ev) => {

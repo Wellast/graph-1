@@ -28,3 +28,7 @@
 .purple {
     background-color: purple;
 }
+
+.pointer {
+    cursor: pointer;
+}
