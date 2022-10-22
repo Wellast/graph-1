@@ -95,6 +95,7 @@ function nextStep() {
     console.log([y, x])
 
     if ((x+1 === width && y === height) || (x === width && y+1 === height)) {
+        drawFinalPath()
         clearInterval(nextStepInterval)
         alert('DONE!')
         return
@@ -159,6 +160,14 @@ function visit(x, y) {
     }
     td.classList.remove('white')
     td.classList.add('green')
+}
+
+function drawFinalPath() {
+    history.forEach(el => {
+        const td = document.getElementById(`td_${el.y}-${el.x}`)
+        td.classList.remove('green')
+        td.classList.add('purple')
+    })
 }
 
 init();
