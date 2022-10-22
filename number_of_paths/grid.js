@@ -19,11 +19,11 @@ let coords = [
 
 let adjacencyMatrixRoutes = [
 /*         1  2  3  4  5  6  */
-/* 1 */  [ 0, 0, 1, 0, 0, 0 ],
-/* 2 */  [ 0, 0, 0, 0, 0, 0 ],
-/* 3 */  [ 0, 0, 0, 1, 0, 1 ],
+/* 1 */  [ 0, 1, 1, 0, 1, 0 ],
+/* 2 */  [ 0, 0, 1, 1, 0, 0 ],
+/* 3 */  [ 0, 0, 0, 1, 1, 1 ],
 /* 4 */  [ 0, 0, 0, 0, 0, 1 ],
-/* 5 */  [ 0, 0, 0, 0, 0, 0 ],
+/* 5 */  [ 0, 0, 0, 0, 0, 1 ],
 /* 6 */  [ 0, 0, 0, 0, 0, 0 ],
 ]
 
@@ -86,8 +86,8 @@ function RunButtonInit() {
             alert(`Speed must be between 50 and 10,000`)
             return
         }
-        const answer = calculatePaths(adjacencyMatrixRoutes)
-        alert(answer[adjacencyMatrixRoutes.length])
+        const weigths = calculatePaths(adjacencyMatrixRoutes)
+        alert(weigths[adjacencyMatrixRoutes.length])
     })
 }
 
@@ -98,11 +98,12 @@ function calculatePaths(matrix) {
         if (weights[id]) {
             return [weights[id]]
         }
-        const entry = matrix.map((row, idx) => row[id-1] === 1 ? idx+1 : 0).filter((el) => el !== 0)
-        console.log(id, entry)
+        let entry = matrix.map((row, idx) => row[id-1] === 1 ? idx+1 : 0).filter((el) => el !== 0)
+        // entry = shuffle(entry)
+        console.log(id, '<-', entry);
         let cw = entry.map((el) => {
             if (!weights[el]) {
-                let newW = getPaths(el).reduce((previousValue, currentValue) => weights[previousValue] + weights[currentValue])
+                let newW = getPaths(el).reduce((previousValue, currentValue) => previousValue + currentValue)
                 console.log(`weights[${el}] = ${newW}`)
                 weights[el] = newW
                 return weights[el]
@@ -117,5 +118,17 @@ function calculatePaths(matrix) {
     weights[matrix.length] = getPaths(matrix.length).reduce((previousValue, currentValue) => previousValue + currentValue)
     return weights
 }
+
+function shuffle(array) {
+    let currentIndex = array.length,  randomIndex;
+    while (currentIndex != 0) {
+      randomIndex = Math.floor(Math.random() * currentIndex);
+      currentIndex--;
+      [array[currentIndex], array[randomIndex]] = [
+        array[randomIndex], array[currentIndex]];
+    }
+    return array;
+}
+  
 
 init()
