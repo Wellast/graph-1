@@ -2,3 +2,38 @@
     margin: 10px;
     border:1px solid #000000;
 }
+
+.square {
+    height: 30px;
+    width: 30px;
+    outline: 1px solid black;
+    color: transparent;
+}
+
+.red {
+    background-color: red;
+}
+
+.white {
+    background-color: white;
+}
+
+.black {
+    background-color: black;
+}
+
+.blue {
+    background-color: blue;
+}
+
+.green {
+    background-color: green;
+}
+
+.purple {
+    background-color: purple;
+}
+
+.pointer {
+    cursor: pointer;
+}
