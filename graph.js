@@ -92,8 +92,8 @@ function nextStep() {
     const width = +document.getElementById('width').value
     const height = +document.getElementById('height').value
     const x = lastVisit[0], y = lastVisit[1]
-    
-    console.log([y, x], [height, width])
+    console.log([y, x])
+
     if ((x+1 === width && y === height) || (x === width && y+1 === height)) {
         clearInterval(nextStepInterval)
         alert('DONE!')
@@ -117,7 +117,7 @@ function nextStep() {
         return
     }
     history.pop()
-    if (history.length) {
+    if (!history.length) {
         clearInterval(nextStepInterval)
         alert('NO PATH FOUND')
         return
@@ -128,10 +128,10 @@ function nextStep() {
 function isAvailable(x, y) {
     const width = +document.getElementById('width').value
     const height = +document.getElementById('height').value
-    if (x === 1 && y === 1) {
-        console.log(y, x, 'BEGINNING')
-        return true
-    }
+    // if (x === 1 && y === 1) {
+    //     console.log(y, x, 'BEGINNING')
+    //     return true
+    // }
     if (x > width || x <= 0 || y > height || y <= 0) {
         console.log(y, x, 'BORDER EDGE')
         return true
@@ -153,6 +153,10 @@ function visit(x, y) {
     visited[`${y}-${x}`] = true
     lastVisit = [x, y]
     const td = document.getElementById(`td_${y}-${x}`)
+    // console.log(x, y, (x != 1 && y != 1))
+    if (x === 1 && y === 1) {
+        return
+    }
     td.classList.remove('white')
     td.classList.add('green')
 }
