@@ -87,7 +87,7 @@ function RunButtonInit() {
             return
         }
         const weigths = calculatePaths(adjacencyMatrixRoutes)
-        alert(weigths[adjacencyMatrixRoutes.length])
+        document.getElementById('number_of_paths').innerHTML = weigths[adjacencyMatrixRoutes.length]
     })
 }
 
@@ -98,8 +98,7 @@ function calculatePaths(matrix) {
         if (weights[id]) {
             return [weights[id]]
         }
-        let entry = matrix.map((row, idx) => row[id-1] === 1 ? idx+1 : 0).filter((el) => el !== 0)
-        // entry = shuffle(entry)
+        const entry = matrix.map((row, idx) => row[id-1] === 1 ? idx+1 : 0).filter((el) => el !== 0)
         console.log(id, '<-', entry);
         let cw = entry.map((el) => {
             if (!weights[el]) {
@@ -111,24 +110,11 @@ function calculatePaths(matrix) {
             return weights[el]
         })
 
-        // console.log('cw', cw, cw.reduce((previousValue, currentValue) => previousValue + currentValue))
         return cw
     }
 
     weights[matrix.length] = getPaths(matrix.length).reduce((previousValue, currentValue) => previousValue + currentValue)
     return weights
 }
-
-function shuffle(array) {
-    let currentIndex = array.length,  randomIndex;
-    while (currentIndex != 0) {
-      randomIndex = Math.floor(Math.random() * currentIndex);
-      currentIndex--;
-      [array[currentIndex], array[randomIndex]] = [
-        array[randomIndex], array[currentIndex]];
-    }
-    return array;
-}
-  
 
 init()
