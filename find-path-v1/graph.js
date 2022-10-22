@@ -97,7 +97,7 @@ function nextStep() {
     const x = lastVisit[0], y = lastVisit[1]
     console.log([y, x])
 
-    if ((x+1 === width && y === height) || (x === width && y+1 === height)) {
+    if ((x+1 === height && y === width) || (x === height && y+1 === width)) {
         drawFinalPath()
         clearInterval(nextStepInterval)
         alert('DONE!')
@@ -136,7 +136,7 @@ function isAvailable(x, y) {
     //     console.log(y, x, 'BEGINNING')
     //     return true
     // }
-    if (x > width || x <= 0 || y > height || y <= 0) {
+    if (x > height || x <= 0 || y > width || y <= 0) {
         console.log(y, x, 'BORDER EDGE')
         return true
     }
