@@ -81,13 +81,18 @@ function init() {
 function RunButtonInit() {
     const runBtn = document.getElementById('find_path_button');
     runBtn.addEventListener('click', () => {
-        const speed = +document.getElementById('speed').value
-        if (speed < 50 || speed > 10000) {
-            alert(`Speed must be between 50 and 10,000`)
-            return
-        }
         const weigths = calculatePaths(adjacencyMatrixRoutes)
         document.getElementById('number_of_paths').innerHTML = weigths[adjacencyMatrixRoutes.length]
+        drawWeights(coords, weigths)
+    })
+}
+
+function drawWeights(coords, weights) {
+    coords.forEach( (node) => {
+        ctx.beginPath()
+        ctx.fillStyle = 'green'
+        ctx.font = "30px Arial"
+        ctx.fillText(weights[node.id], node.x - 10, node.y - 20)
     })
 }
 
