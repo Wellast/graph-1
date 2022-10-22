@@ -19,11 +19,11 @@ let coords = [
 
 let adjacencyMatrixRoutes = [
 /*         1  2  3  4  5  6  */
-/* 1 */  [ 0, 1, 1, 0, 1, 0 ],
-/* 2 */  [ 0, 1, 1, 1, 0, 0 ],
-/* 3 */  [ 0, 0, 0, 1, 1, 1 ],
+/* 1 */  [ 0, 0, 1, 0, 0, 0 ],
+/* 2 */  [ 0, 0, 0, 0, 0, 0 ],
+/* 3 */  [ 0, 0, 0, 1, 0, 1 ],
 /* 4 */  [ 0, 0, 0, 0, 0, 1 ],
-/* 5 */  [ 0, 0, 0, 0, 0, 1 ],
+/* 5 */  [ 0, 0, 0, 0, 0, 0 ],
 /* 6 */  [ 0, 0, 0, 0, 0, 0 ],
 ]
 
@@ -73,7 +73,7 @@ function init() {
             })
         }
         document.getElementById('grid').appendChild(tr);
-        // document.getElementById('find_path_button').disabled = false;
+        document.getElementById('find_path_button').disabled = false;
     })
     RunButtonInit()
 }
@@ -83,13 +83,39 @@ function RunButtonInit() {
     runBtn.addEventListener('click', () => {
         const speed = +document.getElementById('speed').value
         if (speed < 50 || speed > 10000) {
-            alert(`Speed must be between 50 and 10000`)
+            alert(`Speed must be between 50 and 10,000`)
             return
         }
-        runBtn.disabled = true
-        document.getElementById('create_grid_button').disabled = true
-        nextStepInterval = setInterval(nextStep, speed);
+        const answer = calculatePaths(adjacencyMatrixRoutes)
+        alert(answer[adjacencyMatrixRoutes.length])
     })
+}
+
+function calculatePaths(matrix) {
+    const weights = { 1: 1 }
+ 
+    function getPaths(id) {
+        if (weights[id]) {
+            return [weights[id]]
+        }
+        const entry = matrix.map((row, idx) => row[id-1] === 1 ? idx+1 : 0).filter((el) => el !== 0)
+        console.log(id, entry)
+        let cw = entry.map((el) => {
+            if (!weights[el]) {
+                let newW = getPaths(el).reduce((previousValue, currentValue) => weights[previousValue] + weights[currentValue])
+                console.log(`weights[${el}] = ${newW}`)
+                weights[el] = newW
+                return weights[el]
+            }
+            return weights[el]
+        })
+
+        // console.log('cw', cw, cw.reduce((previousValue, currentValue) => previousValue + currentValue))
+        return cw
+    }
+
+    weights[matrix.length] = getPaths(matrix.length).reduce((previousValue, currentValue) => previousValue + currentValue)
+    return weights
 }
 
 init()
