@@ -1,0 +1,51 @@
+#canvas {
+    margin: 10px;
+    border:1px solid #000000;
+}
+
+.square {
+    height: 40px;
+    width: 40px;
+    outline: 1px solid black;
+    color: transparent;
+    margin: 0;
+    padding: 0;
+}
+
+.red {
+    background-color: red;
+}
+
+.white {
+    background-color: white;
+}
+
+.black {
+    background-color: black;
+}
+
+.blue {
+    background-color: blue;
+}
+
+.green {
+    background-color: green;
+}
+
+.purple {
+    background-color: purple;
+}
+
+.pointer {
+    cursor: pointer;
+}
+
+.grid {
+    margin: 10px;
+}
+
+.inp {
+    margin: 0;
+    padding: 0;
+    width: 15px;
+}

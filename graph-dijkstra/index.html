@@ -4,7 +4,19 @@
 </header>
 
 <body>
+    <table id="grid" class="grid"></table>
+    <!-- <table id="grid_weights" class="grid"></table> -->
+    <div>
+        <a>Shortest path:  </a><a id="dinstance">Unknown. Hit the "run" button</a>
+    </div>
+    <div style="margin-bottom: 30px">
+        <button id="find_path_button" disabled>run</button>
+    </div>
+    <canvas id="canvas" width="500" height="500"></canvas>
 </body>
 
 <footer>
+    <script src="./grid.js"></script>
+    <script src="./graph.js"></script>
+    <link rel="stylesheet" href="main.css">
 </footer>
