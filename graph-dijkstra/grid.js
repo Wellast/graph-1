@@ -77,11 +77,34 @@ function drawGrid() {
     })
 }
 
+function drawRoute(coords, adjacencyMatrix, history) {
+    function canvasLine(fromx, fromy, tox, toy) {
+        ctx.beginPath()
+        ctx.strokeStyle = 'red';
+        ctx.lineWidth = 5;
+        ctx.moveTo(fromx, fromy);
+        ctx.lineTo(tox, toy);
+        ctx.stroke();
+    }
+
+    history.forEach((id, idx) => {
+        if (idx === 0) {
+            return
+        }
+
+        const from = coords.find((el) => el.id === history[idx-1])
+        const to   = coords.find((el) => el.id === id)
+        console.log(from.id, '=>', to.id)
+        canvasLine(from.x, from.y, to.x, to.y)
+    })
+}
+
 function RunButtonInit() {
     const runBtn = document.getElementById('find_path_button');
     runBtn.addEventListener('click', () => {
-        const weigths = getShortestPath(coords, adjacencyMatrixRoutes, adjacencyMatrixWeights)
-        document.getElementById('dinstance').innerHTML = weigths
+        const pathInfo = getShortestPath(coords, adjacencyMatrixRoutes, adjacencyMatrixWeights)
+        document.getElementById('dinstance').innerHTML = pathInfo.result
+        drawRoute(coords, adjacencyMatrixRoutes, pathInfo.history)
     })
 }
 
@@ -90,19 +113,20 @@ init()
 function getShortestPath(coords, matrixRoutes, matrixWeights) {
     const visited = {}
     const distance = {}
+    const history = []
+
     coords.forEach((el) => {
         visited[el.id] = false
         distance[el.id] = Number.MAX_SAFE_INTEGER
     })
     distance[1] = 0
-    console.log(visited)
-    console.log(distance)
 
     function visit(id) {
         visited[id] = true
         const mergedNodes = matrixRoutes[id-1].map((val, idx) => val > 0 ? idx+1 : 0).filter((el) => el > 0)
         if (mergedNodes.length) {
             console.log(`Visiting ${id}. Node connected to ${mergedNodes}`)
+            history.push(id)
             const d = []
             mergedNodes.forEach((mn) => {
                 if (!visited[mn]) {
@@ -117,10 +141,14 @@ function getShortestPath(coords, matrixRoutes, matrixWeights) {
                 return visit(nextVisit.id)
             }
         }
-        console.log(visited)
-        console.log(distance)
         return
     }
     visit(1)
-    return distance[coords[coords.length-1].id]
+    history.push(6)
+
+    console.log(visited)
+    console.log(distance)
+    console.log(history)
+
+    return { result: distance[coords[coords.length-1].id], visited, distance, history }
 }
