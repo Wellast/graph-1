@@ -55,6 +55,20 @@ function drawWeights(coords, matrix, weights) {
     ctx.stroke();
 }
 
+function drawResult(coords, weights) {
+    coords.forEach( (node) => {
+        console.log(weights[node.id])
+        ctx.beginPath()
+        ctx.fillStyle = 'red'
+        ctx.font = "30px Arial"
+        ctx.fillText(weights[node.id], node.x - 10, node.y - 20)
+    })
+}
+
+function clearCanvas() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+}
+
 drawEdges(coords, adjacencyMatrixRoutes)
 drawNodes(coords)
 drawWeights(coords, adjacencyMatrixRoutes, adjacencyMatrixWeights)
