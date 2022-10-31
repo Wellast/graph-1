@@ -100,7 +100,6 @@ function nextStep() {
     if ((x+1 === height && y === width) || (x === height && y+1 === width)) {
         drawFinalPath()
         clearInterval(nextStepInterval)
-        alert('DONE!')
         return
     }
 
@@ -123,7 +122,6 @@ function nextStep() {
     history.pop()
     if (!history.length) {
         clearInterval(nextStepInterval)
-        alert('NO PATH FOUND')
         return
     }
     lastVisit = [history[history.length - 1].x, history[history.length - 1].y]
@@ -132,21 +130,14 @@ function nextStep() {
 function isAvailable(x, y) {
     const width = +document.getElementById('width').value
     const height = +document.getElementById('height').value
-    // if (x === 1 && y === 1) {
-    //     console.log(y, x, 'BEGINNING')
-    //     return true
-    // }
     if (x > height || x <= 0 || y > width || y <= 0) {
-        console.log(y, x, 'BORDER EDGE')
         return true
     }
     const cell = document.getElementById(`td_${y}-${x}`).innerText
     if (cell === '1') {
-        console.log(y, x, 'BORDER BLACK')
         return true
     }
     if (visited[`${y}-${x}`]) {
-        console.log(y, x, 'VISITED')
         return true
     }
     return false
@@ -157,7 +148,6 @@ function visit(x, y) {
     visited[`${y}-${x}`] = true
     lastVisit = [x, y]
     const td = document.getElementById(`td_${y}-${x}`)
-    // console.log(x, y, (x != 1 && y != 1))
     if (x === 1 && y === 1) {
         return
     }
